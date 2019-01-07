@@ -5,7 +5,6 @@ import model.UserModel;
 import view.loginpanel.LoginView;
 
 import model.Server.ConnectivityModel;
-import model.Server.LoginModel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,12 +13,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoginController extends controller.Controller{
-    private LoginModel model;
     private LoginView view;
     private ConnectivityModel con;
 
     public LoginController() {
-        this.model = new LoginModel();
         this.view = new LoginView("Logowanie");
         setButtonLogInEvent();
         setButtonGoToSignUpEvent();
@@ -49,21 +46,21 @@ public class LoginController extends controller.Controller{
         ResultSet resultSet = null;
 
         String sql="select * from user where login=? and password=?";
+
+        boolean status = false;
         try{
             con =  new ConnectivityModel();
-            this.setLoginModelLogin(this.getLoginViewLogin());
-            this.setLoginModelPassword(this.getLoginViewPassword());
 
             preparedStatement = con.getConn().prepareStatement(sql);
-            preparedStatement.setString(1, this.getLoginModelLogin());
-            preparedStatement.setString(2, this.getLoginModelPassword());
+            preparedStatement.setString(1, this.getLoginViewLogin());
+            preparedStatement.setString(2, this.getLoginViewPassword());
             resultSet = preparedStatement.executeQuery();
 
             if(resultSet.next()) {
-                this.setLoginModelStatus(true);
+                status = true;
             }
             else {
-                this.setLoginModelStatus(false);
+                status = false;
             }
         }
         catch(SQLException e) {
@@ -73,14 +70,14 @@ public class LoginController extends controller.Controller{
             System.out.println(e);
         }
         finally {
-            if (model.getStatus()) {
+            if (status) {
                 System.out.println("Zalogowano");
 
                 preparedStatement = null;
                 resultSet = null;
 
                 view.setVisible(false);
-                UserModel user = new UserModel(this.getLoginModelLogin());
+                UserModel user = new UserModel(this.getLoginViewLogin());
                 new SurveysController(user);
             }
             else {
@@ -88,27 +85,6 @@ public class LoginController extends controller.Controller{
                 con.close();
             }
         }
-    }
-
-    //Model getters and setters
-    private void setLoginModelLogin(String login){
-        model.setLogin(login);
-    }
-
-    private String getLoginModelLogin(){
-        return model.getLogin();
-    }
-
-    private void setLoginModelPassword(String password){
-        model.setPassword(password);
-    }
-
-    private String getLoginModelPassword(){
-        return model.getPassword();
-    }
-
-    private void setLoginModelStatus(boolean status){
-        model.setStatus(status);
     }
 
     //View getters and setters

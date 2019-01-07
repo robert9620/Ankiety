@@ -1,30 +1,31 @@
 package controller.userpanel;
 
 import model.Server.ConnectivityModel;
-import model.Server.SurveysModel;
 import model.SurveyModel;
 import model.UserModel;
-import view.FrameView;
 import view.userpanel.SurveysView;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 public class SurveysController extends controller.Controller{
     private SurveysView view;
-    private FrameView previousView;
     private UserModel user;
-    private SurveysModel model;
     private ConnectivityModel con;
 
+    private List<SurveyModel> surveys;
+
     public SurveysController(UserModel user) {
-        this.model = new SurveysModel();
         this.view = new SurveysView("Wypełnione ankiety");
         this.user = user;
         super.addMenuActions(view, user);
+
+        this.surveys = new LinkedList<SurveyModel>();;
+
         this.getSurveys();
     }
 
@@ -50,7 +51,7 @@ public class SurveysController extends controller.Controller{
                 survey.addCompletedBy(user);
                 survey.setName(resultSet.getString("name"));
                 survey.setCompletedDate(resultSet.getDate("date"));
-                model.addSurvey(survey);
+                surveys.add(survey);
             }
         }
         catch(SQLException e) {
@@ -65,8 +66,7 @@ public class SurveysController extends controller.Controller{
     }
 
     private void addColumnsToSurveysTable(){
-        List<SurveyModel> surveyList = model.getSurveys();
-        Iterator it = surveyList.iterator();
+        Iterator it = surveys.iterator();
         while(it.hasNext()){
             SurveyModel survey = (SurveyModel) it.next();
             view.addColumnToTable(survey.toTable());

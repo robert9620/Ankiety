@@ -4,7 +4,6 @@ import view.FrameView;
 import view.loginpanel.RegisterView;
 
 import model.Server.ConnectivityModel;
-import model.Server.RegisterModel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,13 +14,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegisterController extends controller.Controller{
-    private RegisterModel model;
     private RegisterView view;
     private ConnectivityModel con;
     private FrameView previouesView;
 
     public RegisterController(FrameView previouesView) {
-        this.model = new RegisterModel();
         this.view = new RegisterView("Rejestracja");
         this.previouesView = previouesView;
         setViewButtonSignUp();
@@ -55,7 +52,7 @@ public class RegisterController extends controller.Controller{
         String err = "";
 
         //login
-        String login = this.getRegisterViewLogin();
+        String login = view.getInputLogin();
         Pattern pattern = Pattern.compile("\\w+");
         Matcher matcher = pattern.matcher(login);
         if (!matcher.matches()) {
@@ -64,9 +61,6 @@ public class RegisterController extends controller.Controller{
         else{
             if (isLoginExists(login, new ConnectivityModel())) {
                 err += "Wpisany login jest zajęty";
-            }
-            else {
-                this.setRegisterModelLogin(login);
             }
         }
 
@@ -80,10 +74,6 @@ public class RegisterController extends controller.Controller{
         } else if (!password.equals(repassword)) {
             err += "Wpisane hasła nie są takie same\n";
         }
-        else{
-            this.setRegisterModelPassword(password);
-            this.setRegisterModelRepeatPassword(repassword);
-        }
 
         if (err.equals("")) {
             this.con = new ConnectivityModel();
@@ -95,8 +85,8 @@ public class RegisterController extends controller.Controller{
 
                 preparedStatement = con.getConn().prepareStatement(query);
 
-                preparedStatement.setString(1, this.getRegisterModelLogin());
-                preparedStatement.setString(2, this.getRegisterModelPassword());
+                preparedStatement.setString(1, view.getInputLogin());
+                preparedStatement.setString(2, String.valueOf(view.getInputPassword()));
 
                 preparedStatement.executeUpdate();
 
@@ -118,8 +108,7 @@ public class RegisterController extends controller.Controller{
             }
         }
         else {
-            this.setRegisterModelErrorMessage(err);
-            view.setErrorMessage(this.getRegisterModelErrorMessage());
+            view.setErrorMessage(err);
         }
     }
 
@@ -148,51 +137,5 @@ public class RegisterController extends controller.Controller{
         }
 
         return false;
-    }
-
-    //Model getters and setters
-    private void setRegisterModelLogin(String login){
-        model.setLogin(login);
-    }
-
-    private String getRegisterModelLogin(){
-        return model.getLogin();
-    }
-
-    private void setRegisterModelPassword(String password){
-        model.setPassword(password);
-    }
-
-    private String getRegisterModelPassword(){
-        return model.getPassword();
-    }
-
-    private void setRegisterModelRepeatPassword(String repeatPassword){
-        model.setRepeatPassword(repeatPassword);
-    }
-
-    private String getRegisterModelRepeatPassword(){
-        return model.getRepeatPassword();
-    }
-
-    public void setRegisterModelErrorMessage(String errorMessage) {
-        model.setErrorMessage(errorMessage);
-    }
-
-    public String getRegisterModelErrorMessage() {
-        return model.getErrorMessage();
-    }
-
-    //View getters and setters
-    private String getRegisterViewLogin(){
-        return view.getInputLogin();
-    }
-
-    private String getRegisterViewPassword(){
-        return String.valueOf(view.getInputPassword());
-    }
-
-    private String getRegisterViewRepeatPassword(){
-        return String.valueOf(view.getInputRepeatPassword());
     }
 }
