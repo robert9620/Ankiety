@@ -13,7 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class LoginController {
+public class LoginController extends controller.Controller{
     private LoginModel model;
     private LoginView view;
     private ConnectivityModel con;

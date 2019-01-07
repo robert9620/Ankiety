@@ -12,8 +12,9 @@ public class SurveysView extends view.FrameView{
 
     private int padding = 10;
 
+
     public SurveysView(String name) throws HeadlessException {
-        super(name);
+        //super(name);
 
         this.createMenu();
 
@@ -35,6 +36,7 @@ public class SurveysView extends view.FrameView{
 
     public void addColumnToTable(Object[] row) {
         //String[] columnRow = {"1", "Czy podoba Ci się aplikacja", "01-01-2019"};
+        row[0] = String.valueOf(model.getRowCount()+1);
         model.addRow(row);
     }
 }

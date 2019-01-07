@@ -20,7 +20,7 @@ public class LoginView extends view.FrameView{
     private JPasswordField inputPassword;
 
     public LoginView(String name) throws HeadlessException {
-        super(name);
+        //super(name);
 
         int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
         int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;

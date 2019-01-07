@@ -1,17 +1,17 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.event.MenuListener;
 import java.awt.*;
 
 public abstract class FrameView extends JFrame{
     protected int frameWidth = 1000;
     protected int frameHeight = 600;
-    private String name;
     private JMenuBar menuBar;
-    private JMenu completedSurveys;
-    private JMenu completeSurvey;
+    private JMenu surveysView;
+    private JMenu completeSurveyView;
 
-    public FrameView(String name) throws HeadlessException {
+    public FrameView() throws HeadlessException {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
         this.setResizable(false);
@@ -26,13 +26,20 @@ public abstract class FrameView extends JFrame{
         menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
 
-        completedSurveys = new JMenu("Wypełnone ankiety");
-        completedSurveys.getAccessibleContext().setAccessibleDescription("Przejdź do widoku wypełnionych ankiet");
-        menuBar.add(completedSurveys);
+        surveysView = new JMenu("Wypełnone ankiety");
+        surveysView.getAccessibleContext().setAccessibleDescription("Przejdź do widoku wypełnionych ankiet");
+        menuBar.add(surveysView);
 
-        completeSurvey = new JMenu("Wypełnij ankietę");
-        completeSurvey.getAccessibleContext().setAccessibleDescription("Przejdź do widoku wypełniania ankiet");
-        menuBar.add(completeSurvey);
+        completeSurveyView = new JMenu("Wypełnij ankietę");
+        completeSurveyView.getAccessibleContext().setAccessibleDescription("Przejdź do widoku wypełniania ankiet");
+        menuBar.add(completeSurveyView);
     }
 
+    public void setSurveysViewMenuListener(MenuListener menuListener){
+        surveysView.addMenuListener(menuListener);
+    }
+
+    public void setCompleteSurveyViewMenuListener(MenuListener menuListener){
+        completeSurveyView.addMenuListener(menuListener);
+    }
 }

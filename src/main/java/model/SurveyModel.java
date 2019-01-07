@@ -10,11 +10,8 @@ public class SurveyModel {
     List<UserModel> completedBy;
     private Date completedDate;
 
-    private int ordinalNumber;
-
     public SurveyModel(){
         this.completedBy = new LinkedList<UserModel>();
-        this.ordinalNumber = 1;
     }
 
     public SurveyModel(String name){
@@ -51,7 +48,7 @@ public class SurveyModel {
 
     public String[] toTable(){
         String[] surveyInfo = new String[3];
-        surveyInfo[0] = String.valueOf(this.ordinalNumber++);
+        surveyInfo[0] = "1";
         surveyInfo[1] = String.valueOf(this.name);
         surveyInfo[2] = String.valueOf(this.completedDate);
         return surveyInfo;

@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegisterController {
+public class RegisterController extends controller.Controller{
     private RegisterModel model;
     private RegisterView view;
     private ConnectivityModel con;
@@ -45,7 +45,7 @@ public class RegisterController {
     private void setViewButtonGoToLogin() {
         view.setButtonGoToLogIn(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                view.setVisible(false);
+                view.dispose();
                 previouesView.setVisible(true);
             }
         });
@@ -103,7 +103,7 @@ public class RegisterController {
                 System.out.println("Zarejestrowano");
 
                 if(view.showSuccessMessage() == 0){
-                    view.setVisible(false);
+                    view.dispose();
                     previouesView.setVisible(true);
                 }
             }

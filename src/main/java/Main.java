@@ -1,4 +1,3 @@
-import view.userpanel.SurveysView;
 import controller.loginpanel.LoginController;
 
 import java.awt.EventQueue;
@@ -14,7 +13,18 @@ public class Main {
 
 //        EventQueue.invokeLater(new Runnable() {
 //            public void run() {
-//                new SurveysView("Wypełnione ankiety");
+//                CompleteSurveyView test = new CompleteSurveyView("Wypełnij ankietę");
+//
+//                test.addSurvey("testowa", new ActionListener() {
+//                    public void actionPerformed(ActionEvent e) {
+//                        System.out.println("work");
+//                    }
+//                });
+//                test.addSurvey("testowa2", new ActionListener() {
+//                    public void actionPerformed(ActionEvent e) {
+//                        System.out.println("work2");
+//                    }
+//                });
 //            }
 //        });
     }
