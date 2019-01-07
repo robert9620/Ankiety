@@ -9,9 +9,10 @@ public abstract class FrameView extends JFrame{
     protected int frameHeight = 600;
     private JMenuBar menuBar;
     private JMenu surveysView;
-    private JMenu completeSurveyView;
+    private JMenu selectSurveyView;
 
-    public FrameView() throws HeadlessException {
+    public FrameView(String name) throws HeadlessException {
+        super(name);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
         this.setResizable(false);
@@ -30,16 +31,16 @@ public abstract class FrameView extends JFrame{
         surveysView.getAccessibleContext().setAccessibleDescription("Przejdź do widoku wypełnionych ankiet");
         menuBar.add(surveysView);
 
-        completeSurveyView = new JMenu("Wypełnij ankietę");
-        completeSurveyView.getAccessibleContext().setAccessibleDescription("Przejdź do widoku wypełniania ankiet");
-        menuBar.add(completeSurveyView);
+        selectSurveyView = new JMenu("Wybierz ankietę");
+        selectSurveyView.getAccessibleContext().setAccessibleDescription("Przejdź do widoku wypełniania ankiet");
+        menuBar.add(selectSurveyView);
     }
 
     public void setSurveysViewMenuListener(MenuListener menuListener){
         surveysView.addMenuListener(menuListener);
     }
 
-    public void setCompleteSurveyViewMenuListener(MenuListener menuListener){
-        completeSurveyView.addMenuListener(menuListener);
+    public void setSelectSurveyViewMenuListener(MenuListener menuListener){
+        selectSurveyView.addMenuListener(menuListener);
     }
 }

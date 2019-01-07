@@ -14,7 +14,7 @@ public class SurveysView extends view.FrameView{
 
 
     public SurveysView(String name) throws HeadlessException {
-        //super(name);
+        super(name);
 
         this.createMenu();
 

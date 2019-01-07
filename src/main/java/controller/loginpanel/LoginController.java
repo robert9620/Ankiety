@@ -52,8 +52,8 @@ public class LoginController extends controller.Controller{
             con =  new ConnectivityModel();
 
             preparedStatement = con.getConn().prepareStatement(sql);
-            preparedStatement.setString(1, this.getLoginViewLogin());
-            preparedStatement.setString(2, this.getLoginViewPassword());
+            preparedStatement.setString(1, view.getLogin());
+            preparedStatement.setString(2, String.valueOf(view.getPassword()));
             resultSet = preparedStatement.executeQuery();
 
             if(resultSet.next()) {
@@ -77,7 +77,7 @@ public class LoginController extends controller.Controller{
                 resultSet = null;
 
                 view.setVisible(false);
-                UserModel user = new UserModel(this.getLoginViewLogin());
+                UserModel user = new UserModel(view.getLogin());
                 new SurveysController(user);
             }
             else {
@@ -85,14 +85,5 @@ public class LoginController extends controller.Controller{
                 con.close();
             }
         }
-    }
-
-    //View getters and setters
-    private String getLoginViewLogin(){
-        return view.getLogin();
-    }
-
-    private String getLoginViewPassword(){
-        return String.valueOf(view.getPassword());
     }
 }

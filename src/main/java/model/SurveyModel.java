@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class SurveyModel {
+    private int id;
     private String name;
     private boolean completed = false;
     List<UserModel> completedBy;
@@ -26,16 +27,8 @@ public class SurveyModel {
         this.name = name;
     }
 
-    public boolean isCompleted() {
-        return completed;
-    }
-
     public void setCompleted(boolean completed) {
         this.completed = completed;
-    }
-
-    public Date getCompletedDate() {
-        return completedDate;
     }
 
     public void setCompletedDate(Date completedDate) {
@@ -44,6 +37,14 @@ public class SurveyModel {
 
     public void addCompletedBy(UserModel user){
         this.completedBy.add(user);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String[] toTable(){

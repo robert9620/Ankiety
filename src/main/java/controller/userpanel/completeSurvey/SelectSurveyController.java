@@ -1,10 +1,12 @@
-package controller.userpanel;
+package controller.userpanel.completeSurvey;
 
 import model.Server.ConnectivityModel;
 import model.SurveyModel;
 import model.UserModel;
-import view.userpanel.SurveysView;
+import view.userpanel.completeSurvey.SelectSurveyView;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,16 +14,16 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SurveysController extends controller.Controller{
-    private SurveysView view;
-    private UserModel user;
+public class SelectSurveyController extends controller.Controller{
+    private SelectSurveyView view;
     private ConnectivityModel con;
+    private UserModel user;
 
-    private String activeViewName = "Wypełnione ankiety";
+    private String activeViewName = "Wybierz ankietę";
     private List<SurveyModel> surveys;
 
-    public SurveysController(UserModel user) {
-        this.view = new SurveysView(activeViewName);
+    public SelectSurveyController(UserModel user) {
+        this.view = new SelectSurveyView(activeViewName);
         this.user = user;
         super.addMenuActions(view, user, activeViewName);
 
@@ -30,7 +32,7 @@ public class SurveysController extends controller.Controller{
         this.getSurveys();
     }
 
-    public SurveysController(UserModel user, ConnectivityModel con) {
+    public SelectSurveyController(UserModel user, ConnectivityModel con) {
         this(user);
         this.con = con;
     }
@@ -39,19 +41,16 @@ public class SurveysController extends controller.Controller{
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        String sql="select * from completedSurvey INNER JOIN survey on survey.id = completedSurvey.surveyId where completedSurvey.userLogin = ?";
+        String sql="select * from survey";
         try{
             con =  new ConnectivityModel();
             preparedStatement = con.getConn().prepareStatement(sql);
-            preparedStatement.setString(1,String.valueOf(user.getLogin()));
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 SurveyModel survey = new SurveyModel();
-                survey.setCompleted(true);
-                survey.addCompletedBy(user);
+                survey.setId(resultSet.getInt("id"));
                 survey.setName(resultSet.getString("name"));
-                survey.setCompletedDate(resultSet.getDate("date"));
                 surveys.add(survey);
             }
         }
@@ -62,15 +61,21 @@ public class SurveysController extends controller.Controller{
             System.out.println(e);
         }
         finally {
-            this.addColumnsToSurveysTable();
+            this.addSurveysToView();
         }
     }
 
-    private void addColumnsToSurveysTable(){
+    private void addSurveysToView(){
         Iterator it = surveys.iterator();
         while(it.hasNext()){
-            SurveyModel survey = (SurveyModel) it.next();
-            view.addColumnToTable(survey.toTable());
+            final SurveyModel survey = (SurveyModel) it.next();
+            view.addSurvey(survey.getName(), new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println(survey.getName() + " clicked");
+                    view.dispose();
+                    new CompleteSurveyController(user, survey);
+                }
+            });
         }
     }
 }

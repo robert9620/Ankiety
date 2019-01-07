@@ -1,12 +1,11 @@
 package controller.userpanel.completeSurvey;
 
+import model.QuestionModel;
 import model.Server.ConnectivityModel;
 import model.SurveyModel;
 import model.UserModel;
 import view.userpanel.completeSurvey.CompleteSurveyView;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,38 +17,48 @@ public class CompleteSurveyController extends controller.Controller{
     private CompleteSurveyView view;
     private ConnectivityModel con;
     private UserModel user;
+    private SurveyModel survey;
 
-    private List<SurveyModel> surveys;
+    private String activeViewName = "Wypełnij ankietę";
+    private List<QuestionModel> questions;
 
-    public CompleteSurveyController(UserModel user) {
-        this.view = new CompleteSurveyView("Wypełnij ankietę");
+    public CompleteSurveyController(UserModel user, SurveyModel survey) {
+        this.view = new CompleteSurveyView(activeViewName);
         this.user = user;
-        super.addMenuActions(view, user);
+        this.survey = survey;
+        super.addMenuActions(view, user, activeViewName);
 
-        this.surveys = new LinkedList<SurveyModel>();
+        this.questions = new LinkedList<QuestionModel>();
 
-        this.getSurveys();
+        view.setSurveyName(survey.getName());
+        this.getQuestion();
+
+        //TODO
+        //zrobic dzialanie buttona gotowe - ma wyswietlic okno dialogowe, pobrac odpowiedzi z view, zapisac je w bazie, dodac do bazy informacje kto wypelnil ankiete, przeniesc do kolejnego widoku
     }
 
-    public CompleteSurveyController(UserModel user, ConnectivityModel con) {
-        this(user);
+    public CompleteSurveyController(UserModel user, ConnectivityModel con, SurveyModel survey) {
+        this(user, survey);
         this.con = con;
     }
 
-    private void getSurveys() {
+    private void getQuestion() {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        String sql="select * from survey";
+        String sql="SELECT * FROM `question` WHERE question.surveyId = ?";
         try{
             con =  new ConnectivityModel();
             preparedStatement = con.getConn().prepareStatement(sql);
+            preparedStatement.setInt(1, survey.getId());
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                SurveyModel survey = new SurveyModel();
-                survey.setName(resultSet.getString("name"));
-                surveys.add(survey);
+                QuestionModel question = new QuestionModel();
+                question.setId(resultSet.getInt("id"));
+                question.setSurvey(survey);
+                question.setContent(resultSet.getString("content"));
+                questions.add(question);
             }
         }
         catch(SQLException e) {
@@ -59,19 +68,15 @@ public class CompleteSurveyController extends controller.Controller{
             System.out.println(e);
         }
         finally {
-            this.addSurveysToView();
+            this.addQuestionsToView();
         }
     }
 
-    private void addSurveysToView(){
-        Iterator it = surveys.iterator();
+    private void addQuestionsToView(){
+        Iterator it = questions.iterator();
         while(it.hasNext()){
-            final SurveyModel survey = (SurveyModel) it.next();
-            view.addSurvey(survey.getName(), new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    System.out.println(survey.getName() + " clicked");
-                }
-            });
+            final QuestionModel question = (QuestionModel) it.next();
+            view.addQuestion(question.getContent());
         }
     }
 }

@@ -1,4 +1,5 @@
 import controller.loginpanel.LoginController;
+import view.userpanel.completeSurvey.CompleteSurveyView;
 
 import java.awt.EventQueue;
 
@@ -14,17 +15,10 @@ public class Main {
 //        EventQueue.invokeLater(new Runnable() {
 //            public void run() {
 //                CompleteSurveyView test = new CompleteSurveyView("Wypełnij ankietę");
-//
-//                test.addSurvey("testowa", new ActionListener() {
-//                    public void actionPerformed(ActionEvent e) {
-//                        System.out.println("work");
-//                    }
-//                });
-//                test.addSurvey("testowa2", new ActionListener() {
-//                    public void actionPerformed(ActionEvent e) {
-//                        System.out.println("work2");
-//                    }
-//                });
+//                test.setSurveyName("Testowa ankieta");
+//                test.addQuestion("Czy lubisz lody?");
+//                test.addQuestion("Czy lubisz napoje gazowane?");
+//                test.addQuestion("Czy lubisz pizze?");
 //            }
 //        });
     }

@@ -1,6 +1,6 @@
 package controller;
 
-import controller.userpanel.completeSurvey.CompleteSurveyController;
+import controller.userpanel.completeSurvey.SelectSurveyController;
 import controller.userpanel.SurveysController;
 import model.UserModel;
 import view.FrameView;
@@ -12,11 +12,11 @@ public class Controller {
     public Controller(){
     }
 
-    protected void addMenuActions(final FrameView view, final UserModel user){
-        view.setCompleteSurveyViewMenuListener(new MenuListener() {
+    protected void addMenuActions(final FrameView activeView, final UserModel user, String activeViewName){
+        activeView.setSelectSurveyViewMenuListener(new MenuListener() {
             public void menuSelected(MenuEvent e) {
-                view.dispose();
-                new CompleteSurveyController(user);
+                activeView.dispose();
+                new SelectSurveyController(user);
             }
 
             public void menuDeselected(MenuEvent e) {
@@ -28,9 +28,9 @@ public class Controller {
             }
         });
 
-        view.setSurveysViewMenuListener(new MenuListener() {
+        activeView.setSurveysViewMenuListener(new MenuListener() {
             public void menuSelected(MenuEvent e) {
-                view.dispose();
+                activeView.dispose();
                 new SurveysController(user);
             }
 
