@@ -1,18 +1,17 @@
 package model;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class QuestionModel {
     int id;
     SurveyModel survey;
     String content;
 
+    private List<AnswerModel> answers;
+
     public QuestionModel(){
-
-    }
-
-    public QuestionModel(int id, SurveyModel survey, String content) {
-        this.id = id;
-        this.survey = survey;
-        this.content = content;
+        this.answers = new LinkedList<AnswerModel>();
     }
 
     public int getId() {
@@ -37,5 +36,13 @@ public class QuestionModel {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public List<AnswerModel> getAnswers() {
+        return answers;
+    }
+
+    public void addAnswer(AnswerModel answer) {
+        answers.add(answer);
     }
 }

@@ -1,9 +1,9 @@
-package controller.userpanel.completeSurvey;
+package controller.userpanel.surveys;
 
 import model.Server.ConnectivityModel;
 import model.SurveyModel;
 import model.UserModel;
-import view.userpanel.completeSurvey.SelectSurveyView;
+import view.userpanel.surveys.SelectSurveyView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -69,13 +69,22 @@ public class SelectSurveyController extends controller.Controller{
         Iterator it = surveys.iterator();
         while(it.hasNext()){
             final SurveyModel survey = (SurveyModel) it.next();
-            view.addSurvey(survey.getName(), new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    System.out.println(survey.getName() + " clicked");
-                    view.dispose();
-                    new CompleteSurveyController(user, survey);
-                }
-            });
+            view.addSurvey(survey.getName(),
+                    new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            System.out.println(survey.getName() + " clicked complete button");
+                            view.dispose();
+                            new CompleteSurveyController(user, survey);
+                        }
+                    },
+                    new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            System.out.println(survey.getName() + " clicked complete see answers button");
+                            view.dispose();
+                            new SeeAnswersController(user, survey);
+                        }
+                    }
+            );
         }
     }
 }

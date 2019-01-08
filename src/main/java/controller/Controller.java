@@ -1,6 +1,6 @@
 package controller;
 
-import controller.userpanel.completeSurvey.SelectSurveyController;
+import controller.userpanel.surveys.SelectSurveyController;
 import controller.userpanel.SurveysController;
 import model.UserModel;
 import view.FrameView;

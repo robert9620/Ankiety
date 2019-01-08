@@ -1,5 +1,4 @@
 import controller.loginpanel.LoginController;
-import view.userpanel.completeSurvey.CompleteSurveyView;
 
 import java.awt.EventQueue;
 

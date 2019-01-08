@@ -31,8 +31,8 @@ public abstract class FrameView extends JFrame{
         surveysView.getAccessibleContext().setAccessibleDescription("Przejdź do widoku wypełnionych ankiet");
         menuBar.add(surveysView);
 
-        selectSurveyView = new JMenu("Wybierz ankietę");
-        selectSurveyView.getAccessibleContext().setAccessibleDescription("Przejdź do widoku wypełniania ankiet");
+        selectSurveyView = new JMenu("Ankiety");
+        selectSurveyView.getAccessibleContext().setAccessibleDescription("Przejdź do widoku ankiet");
         menuBar.add(selectSurveyView);
     }
 

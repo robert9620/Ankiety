@@ -1,10 +1,10 @@
-package controller.userpanel.completeSurvey;
+package controller.userpanel.surveys;
 
 import model.QuestionModel;
 import model.Server.ConnectivityModel;
 import model.SurveyModel;
 import model.UserModel;
-import view.userpanel.completeSurvey.CompleteSurveyView;
+import view.userpanel.surveys.CompleteSurveyView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,15 +35,12 @@ public class CompleteSurveyController extends controller.Controller{
         this.questions = new LinkedList<QuestionModel>();
 
         view.setSurveyName(survey.getName());
-        this.getQuestion();
-        view.setButtonAccept(new ActionListener() {
+        this.getQuestions();
+        view.setButtonAcceptListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CompleteSurveyController.this.setButtonAccept();
             }
         });
-
-        //TODO
-        //zrobic dzialanie buttona wypelnij - dodac do bazy informacje kto wypelnil ankiete, przeniesc do kolejnego widoku
     }
 
     public CompleteSurveyController(UserModel user, ConnectivityModel con, SurveyModel survey) {
@@ -51,7 +48,7 @@ public class CompleteSurveyController extends controller.Controller{
         this.con = con;
     }
 
-    private void getQuestion() {
+    private void getQuestions() {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 

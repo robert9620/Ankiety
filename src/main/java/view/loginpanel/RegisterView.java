@@ -18,7 +18,7 @@ public class RegisterView extends view.FrameView {
     private JPasswordField inputPassword;
     private JPasswordField inputRepeatPassword;
 
-    public RegisterView(String name) throws HeadlessException {
+    public RegisterView(String name){
         super(name);
 
         int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;

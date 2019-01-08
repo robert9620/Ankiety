@@ -1,6 +1,4 @@
-package view.userpanel.completeSurvey;
-
-import model.QuestionModel;
+package view.userpanel.surveys;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +17,7 @@ public class CompleteSurveyView extends view.FrameView{
     private JLabel labelTitle;
     private JButton buttonAccept;
 
-    public CompleteSurveyView(String name) throws HeadlessException {
+    public CompleteSurveyView(String name){
         super(name);
 
         textFields = new LinkedList<JTextField> ();
@@ -61,7 +59,7 @@ public class CompleteSurveyView extends view.FrameView{
         howManyQuestionsExists++;
     }
 
-    public void setButtonAccept(ActionListener actionListener){
+    public void setButtonAcceptListener(ActionListener actionListener){
         buttonAccept.addActionListener(actionListener);
     }
 

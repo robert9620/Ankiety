@@ -13,7 +13,7 @@ public class SurveysView extends view.FrameView{
     private int padding = 10;
 
 
-    public SurveysView(String name) throws HeadlessException {
+    public SurveysView(String name){
         super(name);
 
         this.createMenu();
