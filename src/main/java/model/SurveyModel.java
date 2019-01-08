@@ -1,5 +1,7 @@
 package model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,6 +35,14 @@ public class SurveyModel {
 
     public void setCompletedDate(Date completedDate) {
         this.completedDate = completedDate;
+    }
+
+    public void setCompletedDate(String completedDate) {
+        try {
+            this.completedDate = new SimpleDateFormat("yyyy-mm-dd").parse(completedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public void addCompletedBy(UserModel user){

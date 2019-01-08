@@ -84,19 +84,19 @@ public class RegisterView extends view.FrameView {
                 null);
     }
 
+    public void showErrorMessage(String errorMessage){
+        JOptionPane.showMessageDialog(this,
+                errorMessage,
+                "Błędne dane",
+                JOptionPane.ERROR_MESSAGE);
+    }
+
     public void setButtonSignUp(ActionListener actionListener){
         buttonSignUp.addActionListener(actionListener);
     }
 
     public void setButtonGoToLogIn(ActionListener actionListener){
         buttonGoToLogin.addActionListener(actionListener);
-    }
-
-    public void setErrorMessage(String errorMessage){
-        JOptionPane.showMessageDialog(this,
-                errorMessage,
-                "Błędne dane",
-                JOptionPane.ERROR_MESSAGE);
     }
 
     public String getInputLogin() {

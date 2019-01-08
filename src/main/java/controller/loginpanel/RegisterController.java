@@ -108,7 +108,7 @@ public class RegisterController extends controller.Controller{
             }
         }
         else {
-            view.setErrorMessage(err);
+            view.showErrorMessage(err);
         }
     }
 

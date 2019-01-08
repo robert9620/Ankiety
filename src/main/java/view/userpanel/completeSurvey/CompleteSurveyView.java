@@ -1,8 +1,11 @@
 package view.userpanel.completeSurvey;
 
+import model.QuestionModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -64,5 +67,35 @@ public class CompleteSurveyView extends view.FrameView{
 
     public List<JTextField> getTextFields() {
         return textFields;
+    }
+
+    public int showSuccessMessage(){
+        return JOptionPane.showOptionDialog(this,
+                "Twoje odpowiedzi na pytania w ankiecie zostały zapisane.",
+                "Ankieta wypełniona",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                null);
+    }
+
+    public void showErrorMessage(String errorMessage){
+        JOptionPane.showMessageDialog(this,
+                errorMessage,
+                "Błędne dane",
+                JOptionPane.ERROR_MESSAGE);
+    }
+
+    public String[] getAnswers(){
+        String[] answers = new String[textFields.size()];
+        Iterator it = textFields.iterator();
+        int intIt = 0;
+        while(it.hasNext()){
+            JTextField answer = (JTextField) it.next();
+            answers[intIt] = answer.getText();
+            intIt++;
+        }
+        return answers;
     }
 }
