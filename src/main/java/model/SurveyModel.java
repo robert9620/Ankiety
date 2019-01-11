@@ -1,12 +1,13 @@
 package model;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SurveyModel {
+public class SurveyModel implements Serializable{
     private int id;
     private String name;
     private boolean completed = false;

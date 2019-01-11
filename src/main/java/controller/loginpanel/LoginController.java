@@ -2,9 +2,9 @@ package controller.loginpanel;
 
 import controller.userpanel.SurveysController;
 import model.UserModel;
-import view.connectpanel.LoginView;
+import view.loginpanel.LoginView;
 
-import model.connectivity.ConnectivityModel;
+import model.connectivity.JDBCConectivityModel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +14,7 @@ import java.sql.SQLException;
 
 public class LoginController extends controller.Controller{
     private LoginView view;
-    private ConnectivityModel con;
+    private JDBCConectivityModel con;
 
     public LoginController() {
         this.view = new LoginView("Logowanie");
@@ -49,7 +49,7 @@ public class LoginController extends controller.Controller{
 
         boolean status = false;
         try{
-            con =  new ConnectivityModel();
+            con =  new JDBCConectivityModel();
 
             preparedStatement = con.getConn().prepareStatement(sql);
             preparedStatement.setString(1, view.getLogin());

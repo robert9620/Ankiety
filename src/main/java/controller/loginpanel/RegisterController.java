@@ -1,9 +1,9 @@
 package controller.loginpanel;
 
 import view.FrameView;
-import view.connectpanel.RegisterView;
+import view.loginpanel.RegisterView;
 
-import model.connectivity.ConnectivityModel;
+import model.connectivity.JDBCConectivityModel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 
 public class RegisterController extends controller.Controller{
     private RegisterView view;
-    private ConnectivityModel con;
+    private JDBCConectivityModel con;
     private FrameView previouesView;
 
     public RegisterController(FrameView previouesView) {
@@ -25,7 +25,7 @@ public class RegisterController extends controller.Controller{
         setViewButtonGoToLogin();
     }
 
-    public RegisterController(FrameView previouesView, ConnectivityModel con) {
+    public RegisterController(FrameView previouesView, JDBCConectivityModel con) {
         this(previouesView);
         this.con = con;
     }
@@ -59,7 +59,7 @@ public class RegisterController extends controller.Controller{
             err += "Wpisano niepoprawny login\n";
         }
         else{
-            if (isLoginExists(login, new ConnectivityModel())) {
+            if (isLoginExists(login, new JDBCConectivityModel())) {
                 err += "Wpisany login jest zajęty";
             }
         }
@@ -76,7 +76,7 @@ public class RegisterController extends controller.Controller{
         }
 
         if (err.equals("")) {
-            this.con = new ConnectivityModel();
+            this.con = new JDBCConectivityModel();
 
             try {
                 PreparedStatement preparedStatement = null;
@@ -112,7 +112,7 @@ public class RegisterController extends controller.Controller{
         }
     }
 
-    private boolean isLoginExists(String login, ConnectivityModel con) {
+    private boolean isLoginExists(String login, JDBCConectivityModel con) {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         String sql="select * from user where login=?";

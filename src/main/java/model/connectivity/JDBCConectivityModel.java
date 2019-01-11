@@ -3,14 +3,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectivityModel {
+public class JDBCConectivityModel {
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String DB_URL = "jdbc:mysql://localhost/ankiety";
     private static final String USER = "root" ;
     private static final String PASS = "";
     private Connection conn;
 
-    public ConnectivityModel() {
+    public JDBCConectivityModel() {
         conn = null;
         try {
             Class.forName(JDBC_DRIVER);

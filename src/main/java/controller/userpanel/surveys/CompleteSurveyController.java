@@ -1,7 +1,7 @@
 package controller.userpanel.surveys;
 
 import model.QuestionModel;
-import model.connectivity.ConnectivityModel;
+import model.connectivity.JDBCConectivityModel;
 import model.SurveyModel;
 import model.UserModel;
 import view.userpanel.surveys.CompleteSurveyView;
@@ -19,7 +19,7 @@ import java.util.List;
 
 public class CompleteSurveyController extends controller.Controller{
     private CompleteSurveyView view;
-    private ConnectivityModel con;
+    private JDBCConectivityModel con;
     private UserModel user;
     private SurveyModel survey;
 
@@ -30,7 +30,6 @@ public class CompleteSurveyController extends controller.Controller{
         this.view = new CompleteSurveyView(activeViewName);
         this.user = user;
         this.survey = survey;
-        super.addMenuActions(view, user, activeViewName);
 
         this.questions = new LinkedList<QuestionModel>();
 
@@ -43,7 +42,7 @@ public class CompleteSurveyController extends controller.Controller{
         });
     }
 
-    public CompleteSurveyController(UserModel user, ConnectivityModel con, SurveyModel survey) {
+    public CompleteSurveyController(UserModel user, JDBCConectivityModel con, SurveyModel survey) {
         this(user, survey);
         this.con = con;
     }
@@ -54,7 +53,7 @@ public class CompleteSurveyController extends controller.Controller{
 
         String sql="SELECT * FROM `question` WHERE question.surveyId = ?";
         try{
-            con =  new ConnectivityModel();
+            con =  new JDBCConectivityModel();
             preparedStatement = con.getConn().prepareStatement(sql);
             preparedStatement.setInt(1, survey.getId());
             resultSet = preparedStatement.executeQuery();
@@ -112,7 +111,7 @@ public class CompleteSurveyController extends controller.Controller{
 
     private void saveAnswersToDataBase(){
         String[] answers = view.getAnswers();
-        this.con = new ConnectivityModel();
+        this.con = new JDBCConectivityModel();
         try {
             for(int i=0; i<answers.length; i++) {
                 PreparedStatement preparedStatement = null;
@@ -139,7 +138,7 @@ public class CompleteSurveyController extends controller.Controller{
     }
 
     private void setSurveyCompletedByUser(){
-        this.con = new ConnectivityModel();
+        this.con = new JDBCConectivityModel();
         try {
             PreparedStatement preparedStatement = null;
 

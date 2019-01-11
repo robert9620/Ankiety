@@ -1,4 +1,5 @@
 import controller.loginpanel.LoginController;
+import model.connectivity.ClientTCPModel;
 
 import java.awt.EventQueue;
 
@@ -10,6 +11,7 @@ public class Main {
                 new LoginController();
             }
         });
+        new ClientTCPModel();
 
 //        EventQueue.invokeLater(new Runnable() {
 //            public void run() {

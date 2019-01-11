@@ -8,6 +8,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CompleteSurveyView extends view.FrameView{
+    private int frameWidth = 500;
+    protected int frameHeight = 500;
+
     private int padding = 50;
     private int firstLabelHeight = 100;
     private int spaceBetween = 36;
@@ -19,6 +22,12 @@ public class CompleteSurveyView extends view.FrameView{
 
     public CompleteSurveyView(String name){
         super(name);
+
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+        int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+        this.setLocation((screenWidth-frameWidth)/2, (screenHeight-frameHeight)/2);
+        this.setSize(frameWidth, frameHeight);
 
         textFields = new LinkedList<JTextField> ();
 
@@ -33,8 +42,6 @@ public class CompleteSurveyView extends view.FrameView{
         buttonAccept.setLocation(padding,firstLabelHeight);
         this.getRootPane().setDefaultButton(buttonAccept);
         this.add(buttonAccept);
-
-        this.createMenu();
     }
 
     public void setSurveyName(String surveyName){

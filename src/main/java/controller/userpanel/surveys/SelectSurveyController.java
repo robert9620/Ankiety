@@ -1,6 +1,6 @@
 package controller.userpanel.surveys;
 
-import model.connectivity.ConnectivityModel;
+import model.connectivity.JDBCConectivityModel;
 import model.SurveyModel;
 import model.UserModel;
 import view.userpanel.surveys.SelectSurveyView;
@@ -16,7 +16,7 @@ import java.util.List;
 
 public class SelectSurveyController extends controller.Controller{
     private SelectSurveyView view;
-    private ConnectivityModel con;
+    private JDBCConectivityModel con;
     private UserModel user;
 
     private String activeViewName = "Wybierz ankietę";
@@ -32,7 +32,7 @@ public class SelectSurveyController extends controller.Controller{
         this.getSurveys();
     }
 
-    public SelectSurveyController(UserModel user, ConnectivityModel con) {
+    public SelectSurveyController(UserModel user, JDBCConectivityModel con) {
         this(user);
         this.con = con;
     }
@@ -43,7 +43,7 @@ public class SelectSurveyController extends controller.Controller{
 
         String sql="select * from survey";
         try{
-            con =  new ConnectivityModel();
+            con =  new JDBCConectivityModel();
             preparedStatement = con.getConn().prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
 
@@ -73,8 +73,8 @@ public class SelectSurveyController extends controller.Controller{
                     new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             System.out.println(survey.getName() + " clicked complete button");
-                            view.dispose();
-                            new CompleteSurveyController(user, survey);
+                            CompleteSurveyThread cst = new CompleteSurveyThread(survey);
+                            cst.start();
                         }
                     },
                     new ActionListener() {
@@ -85,6 +85,19 @@ public class SelectSurveyController extends controller.Controller{
                         }
                     }
             );
+        }
+    }
+
+    private class CompleteSurveyThread extends Thread {
+        SurveyModel survey;
+
+        public CompleteSurveyThread(SurveyModel survey){
+            this.survey = survey;
+        }
+
+        @Override
+        public void run() {
+            new CompleteSurveyController(user, survey);
         }
     }
 }

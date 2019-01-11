@@ -1,6 +1,6 @@
 package controller.userpanel;
 
-import model.connectivity.ConnectivityModel;
+import model.connectivity.JDBCConectivityModel;
 import model.SurveyModel;
 import model.UserModel;
 import view.userpanel.SurveysView;
@@ -15,7 +15,7 @@ import java.util.List;
 public class SurveysController extends controller.Controller{
     private SurveysView view;
     private UserModel user;
-    private ConnectivityModel con;
+    private JDBCConectivityModel con;
 
     private String activeViewName = "Wypełnione ankiety";
     private List<SurveyModel> surveys;
@@ -30,7 +30,7 @@ public class SurveysController extends controller.Controller{
         this.getSurveys();
     }
 
-    public SurveysController(UserModel user, ConnectivityModel con) {
+    public SurveysController(UserModel user, JDBCConectivityModel con) {
         this(user);
         this.con = con;
     }
@@ -41,7 +41,7 @@ public class SurveysController extends controller.Controller{
 
         String sql="select * from completedSurvey INNER JOIN survey on survey.id = completedSurvey.surveyId where completedSurvey.userLogin = ?";
         try{
-            con =  new ConnectivityModel();
+            con =  new JDBCConectivityModel();
             preparedStatement = con.getConn().prepareStatement(sql);
             preparedStatement.setString(1,String.valueOf(user.getLogin()));
             resultSet = preparedStatement.executeQuery();

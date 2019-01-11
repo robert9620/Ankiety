@@ -3,7 +3,7 @@ package controller.userpanel.surveys;
 import controller.Controller;
 import model.AnswerModel;
 import model.QuestionModel;
-import model.connectivity.ConnectivityModel;
+import model.connectivity.JDBCConectivityModel;
 import model.SurveyModel;
 import model.UserModel;
 import view.userpanel.surveys.SeeAnswersView;
@@ -19,7 +19,7 @@ import java.util.List;
 
 public class SeeAnswersController extends Controller{
     private SeeAnswersView view;
-    private ConnectivityModel con;
+    private JDBCConectivityModel con;
     private UserModel user;
     private SurveyModel survey;
 
@@ -58,7 +58,7 @@ public class SeeAnswersController extends Controller{
 
         String sql="SELECT * FROM `question` WHERE question.surveyId = ?";
         try{
-            con =  new ConnectivityModel();
+            con =  new JDBCConectivityModel();
             preparedStatement = con.getConn().prepareStatement(sql);
             preparedStatement.setInt(1, survey.getId());
             resultSet = preparedStatement.executeQuery();
@@ -85,7 +85,7 @@ public class SeeAnswersController extends Controller{
 
         String sql="SELECT * FROM `answer` WHERE answer.questionId = ?";
         try{
-            con =  new ConnectivityModel();
+            con =  new JDBCConectivityModel();
             preparedStatement = con.getConn().prepareStatement(sql);
             preparedStatement.setInt(1, question.getId());
             resultSet = preparedStatement.executeQuery();
