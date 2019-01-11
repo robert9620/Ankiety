@@ -6,7 +6,11 @@
 
     <groupId>ankiety</groupId>
     <artifactId>ankiety</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>serwer</module>
+    </modules>
 
     <dependencies>
 

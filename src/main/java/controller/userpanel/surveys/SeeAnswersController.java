@@ -3,7 +3,7 @@ package controller.userpanel.surveys;
 import controller.Controller;
 import model.AnswerModel;
 import model.QuestionModel;
-import model.Server.ConnectivityModel;
+import model.connectivity.ConnectivityModel;
 import model.SurveyModel;
 import model.UserModel;
 import view.userpanel.surveys.SeeAnswersView;

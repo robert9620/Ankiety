@@ -2,9 +2,9 @@ package controller.loginpanel;
 
 import controller.userpanel.SurveysController;
 import model.UserModel;
-import view.loginpanel.LoginView;
+import view.connectpanel.LoginView;
 
-import model.Server.ConnectivityModel;
+import model.connectivity.ConnectivityModel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

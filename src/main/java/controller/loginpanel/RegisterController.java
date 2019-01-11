@@ -1,9 +1,9 @@
 package controller.loginpanel;
 
 import view.FrameView;
-import view.loginpanel.RegisterView;
+import view.connectpanel.RegisterView;
 
-import model.Server.ConnectivityModel;
+import model.connectivity.ConnectivityModel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

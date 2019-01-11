@@ -1,7 +1,7 @@
 package controller.userpanel.surveys;
 
 import model.QuestionModel;
-import model.Server.ConnectivityModel;
+import model.connectivity.ConnectivityModel;
 import model.SurveyModel;
 import model.UserModel;
 import view.userpanel.surveys.CompleteSurveyView;

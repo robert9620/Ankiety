@@ -1,4 +1,4 @@
-package view.loginpanel;
+package view.connectpanel;
 
 import javax.swing.*;
 import java.awt.*;
