@@ -91,7 +91,6 @@ public class CompleteSurveyController extends controller.Controller{
                 this.saveAnswersToDataBase();
                 this.setSurveyCompletedByUser();
                 view.dispose();
-                new SelectSurveyController(user);
             }
         }
         else{
