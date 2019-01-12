@@ -4,17 +4,14 @@ import controller.userpanel.SurveysController;
 import model.UserModel;
 import view.loginpanel.LoginView;
 
-import model.connectivity.JDBCConectivityModel;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.*;
+import java.net.InetAddress;
+import java.net.Socket;
 
 public class LoginController extends controller.Controller{
     private LoginView view;
-    private JDBCConectivityModel con;
 
     public LoginController() {
         this.view = new LoginView("Logowanie");
@@ -26,9 +23,46 @@ public class LoginController extends controller.Controller{
         view.setButtonLogIn(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("click login button");
-                login();
+                String address = "192.168.1.10";
+                int port = 12367;
+
+                try {
+                    Socket socket = new Socket(InetAddress.getByName(address), port);
+                    socket.setTcpNoDelay(true);
+
+                    OutputStream os = socket.getOutputStream();
+                    ObjectOutputStream oos = new ObjectOutputStream(os);
+                    UserModel user = new UserModel(view.getLogin(), view.getPassword());
+                    oos.writeObject(user);
+
+                    BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    String response = in.readLine();
+                    System.out.println(response);
+                    login(response);
+
+                    PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+                    out.println("exit");
+                    out.flush();
+
+                    socket.close();
+                } catch (Exception er) {
+                    System.err.println(er);
+                }
             }
         });
+    }
+
+    private void login(String response) {
+        if (response.equals("")) {
+            System.out.println("Zalogowano");
+
+            view.dispose();
+            UserModel user = new UserModel(view.getLogin());
+            new SurveysController(user);
+        }
+        else {
+            view.setErrorLabel(response);
+        }
     }
 
     private void setButtonGoToSignUpEvent() {
@@ -39,51 +73,5 @@ public class LoginController extends controller.Controller{
                 new RegisterController(view);
             }
         });
-    }
-
-    private void login() {
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        String sql="select * from user where login=? and password=?";
-
-        boolean status = false;
-        try{
-            con =  new JDBCConectivityModel();
-
-            preparedStatement = con.getConn().prepareStatement(sql);
-            preparedStatement.setString(1, view.getLogin());
-            preparedStatement.setString(2, String.valueOf(view.getPassword()));
-            resultSet = preparedStatement.executeQuery();
-
-            if(resultSet.next()) {
-                status = true;
-            }
-            else {
-                status = false;
-            }
-        }
-        catch(SQLException e) {
-            System.out.println(e);
-        }
-        catch (Exception e){
-            System.out.println(e);
-        }
-        finally {
-            if (status) {
-                System.out.println("Zalogowano");
-
-                preparedStatement = null;
-                resultSet = null;
-
-                view.setVisible(false);
-                UserModel user = new UserModel(view.getLogin());
-                new SurveysController(user);
-            }
-            else {
-                view.setErrorLabel("Błędny login lub hasło");
-                con.close();
-            }
-        }
     }
 }

@@ -72,8 +72,8 @@ public class LoginView extends view.FrameView{
         buttonGoToSignUp.addActionListener(actionListener);
     }
 
-    public char[] getPassword() {
-        return inputPassword.getPassword();
+    public String getPassword() {
+        return String.valueOf(inputPassword.getPassword());
     }
 
     public String getLogin() {

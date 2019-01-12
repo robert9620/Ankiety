@@ -1,6 +1,6 @@
 package controller.userpanel.surveys;
 
-import model.connectivity.JDBCConectivityModel;
+import model.connectivity.JDBCConnectivityModel;
 import model.SurveyModel;
 import model.UserModel;
 import view.userpanel.surveys.SelectSurveyView;
@@ -16,7 +16,7 @@ import java.util.List;
 
 public class SelectSurveyController extends controller.Controller{
     private SelectSurveyView view;
-    private JDBCConectivityModel con;
+    private JDBCConnectivityModel con;
     private UserModel user;
 
     private String activeViewName = "Wybierz ankietę";
@@ -32,7 +32,7 @@ public class SelectSurveyController extends controller.Controller{
         this.getSurveys();
     }
 
-    public SelectSurveyController(UserModel user, JDBCConectivityModel con) {
+    public SelectSurveyController(UserModel user, JDBCConnectivityModel con) {
         this(user);
         this.con = con;
     }
@@ -43,7 +43,7 @@ public class SelectSurveyController extends controller.Controller{
 
         String sql="select * from survey";
         try{
-            con =  new JDBCConectivityModel();
+            con =  new JDBCConnectivityModel();
             preparedStatement = con.getConn().prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
 

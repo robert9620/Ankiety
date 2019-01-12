@@ -1,7 +1,7 @@
 package controller.userpanel.surveys;
 
 import model.QuestionModel;
-import model.connectivity.JDBCConectivityModel;
+import model.connectivity.JDBCConnectivityModel;
 import model.SurveyModel;
 import model.UserModel;
 import view.userpanel.surveys.CompleteSurveyView;
@@ -19,7 +19,7 @@ import java.util.List;
 
 public class CompleteSurveyController extends controller.Controller{
     private CompleteSurveyView view;
-    private JDBCConectivityModel con;
+    private JDBCConnectivityModel con;
     private UserModel user;
     private SurveyModel survey;
 
@@ -42,7 +42,7 @@ public class CompleteSurveyController extends controller.Controller{
         });
     }
 
-    public CompleteSurveyController(UserModel user, JDBCConectivityModel con, SurveyModel survey) {
+    public CompleteSurveyController(UserModel user, JDBCConnectivityModel con, SurveyModel survey) {
         this(user, survey);
         this.con = con;
     }
@@ -53,7 +53,7 @@ public class CompleteSurveyController extends controller.Controller{
 
         String sql="SELECT * FROM `question` WHERE question.surveyId = ?";
         try{
-            con =  new JDBCConectivityModel();
+            con =  new JDBCConnectivityModel();
             preparedStatement = con.getConn().prepareStatement(sql);
             preparedStatement.setInt(1, survey.getId());
             resultSet = preparedStatement.executeQuery();
@@ -111,7 +111,7 @@ public class CompleteSurveyController extends controller.Controller{
 
     private void saveAnswersToDataBase(){
         String[] answers = view.getAnswers();
-        this.con = new JDBCConectivityModel();
+        this.con = new JDBCConnectivityModel();
         try {
             for(int i=0; i<answers.length; i++) {
                 PreparedStatement preparedStatement = null;
@@ -138,7 +138,7 @@ public class CompleteSurveyController extends controller.Controller{
     }
 
     private void setSurveyCompletedByUser(){
-        this.con = new JDBCConectivityModel();
+        this.con = new JDBCConnectivityModel();
         try {
             PreparedStatement preparedStatement = null;
 
